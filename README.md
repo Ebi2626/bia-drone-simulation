@@ -46,17 +46,18 @@ To make results a little bit more objective results achived by those algorithms 
 
 ## Project structure
 
-├── README.md
-|
-└── ros2
+
+    |__ README.md - project documentation
     |
-    ├── build.sh - building podman image
-    |
-    ├── Dockerfile - podman image
-    |
-    ├── run.sh - running podman image
-    |
-    └── src - simulation source files
+    |── ros2 - folder with ROS2 files
+        |
+        ├── build.sh - building podman image
+        |
+        ├── Dockerfile - podman image
+        |
+        ├── run.sh - running podman container
+        |
+        └── src - simulation source files
 
 
 
