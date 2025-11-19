@@ -10,11 +10,11 @@ podman run -it --rm \
   --ipc=host \
   -e DISPLAY=$DISPLAY \
   -e QT_X11_NO_MITSHM=1 \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:Z \
-  -v ~/simulation/ros2/src:/ros2_ws/src:Z \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  -v ~/simulation/ros2/src:/home/ros2user/ros2_ws/src/my_swarm_planning:rw \
   --device=/dev/dri \
-  --name ros2_gui \
-  ros2-jazzy-gui
+  --name ros2_px4_dev \
+  ros2_px4_swarm:latest
 
 # Po wyjściu z kontenera, przywróć zabezpieczenia X11
 xhost -local:
