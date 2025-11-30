@@ -4,14 +4,17 @@ This repository contains an experiment on the efficiency of bio-inspired algorit
 
 ## Usage
 Complete simulation will require few steps and few terminal window to work.
-1. Running "build.sh" will create docker image with ROS2, Gazebo and PX4-Autopilot
-2. Running "run.sh" will launch docker container
+1. Running `build.sh` will create docker image with ROS2, Gazebo and PX4-Autopilot
+2. Running `run.sh` will launch docker container
 3. Inside the container (enter to the container with `podman exec -it ros2_px4_dev /bin/bash`) we need to build Gazebo with `cd /opt/PX4-Autopilot && make px4_sitl gz_x500` - this will launch window with simulation GUI on the host machine.
 4. In second terminal we need to run agent `MicroXRCEAgent udp4 -p 8888`
 5. In third terminal we need to launch simulation itself with few commands:
-    - `source /opt/ros/jazzy/setup.bash`
+    - `source /opt/ros/humble/setup.bash`
     - `source /opt/ros2_ws/install/setup.bash`
     - `python3 simulation_file_name.py` - launch simulation
+
+## Map edition
+To edit map we have to launch container `run.sh` and launch choosen world in Gazebo eg: `gazebo --verbose ~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/yosemite.world`. List of default avilable worlds is located in `default-worlds.txt`
 
 Completing this steps will allow us to see simulation in the GUI and verify if choosen algorithms works as expected. To verify results in the terms of mathematical correctness we will need to listen to some topics in the separate terminal and that will be added later.
 

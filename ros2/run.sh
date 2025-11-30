@@ -1,20 +1,31 @@
 #!/bin/bash
-# run.sh - Skrypt uruchamiania kontenera ROS2 z GUI
+# run.sh - Skrypt uruchamiania kontenera ROS2 z Gazebo Classic
 
-# Włącz dostęp do X11
+# Dostęp do X11 dla lokalnych połączeń
 xhost +local:
 
-# Uruchom kontener z obsługą GUI
+# Nazwa obrazu i kontenera
+IMAGE_NAME="ros2_px4_swarm:latest"
+CONTAINER_NAME="ros2_px4_dev"
+
+echo "Uruchamianie kontenera $CONTAINER_NAME..."
+
+# Uruchomienie kontenera z odpowiednimi opcjami
 podman run -it --rm \
   --net=host \
   --ipc=host \
-  -e DISPLAY=$DISPLAY \
-  -e QT_X11_NO_MITSHM=1 \
+  --pid=host \
+  --security-opt label=disable \
+  --userns=keep-id \
+  --env DISPLAY=$DISPLAY \
+  --env QT_X11_NO_MITSHM=1 \
+  --env NVIDIA_DRIVER_CAPABILITIES=all \
+  --env NVIDIA_VISIBLE_DEVICES=all \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   -v ~/simulation/ros2/src:/home/ros2user/ros2_ws/src/my_swarm_planning:rw \
-  --device=/dev/dri \
-  --name ros2_px4_dev \
-  ros2_px4_swarm:latest
+  --device=nvidia.com/gpu=all \
+  --name $CONTAINER_NAME \
+  $IMAGE_NAME
 
-# Po wyjściu z kontenera, przywróć zabezpieczenia X11
+# Cofanie dostępu do X11 dla lokalnych połączeń ze względów bezpieczeństwa
 xhost -local:

@@ -1,0 +1,20 @@
+baylands.world  5/10 - jakiś park z drzewkami
+hippocampus.world - nie działa
+iris_irlock.world - 1/10 - pusta plansza
+ocean.world - nie działa
+typhoon_h480.world - nie odpala się
+warehouse.world - 1/10 kilka ścian 
+boat.world - 1/10 - nie działa 
+hitl_iris.world - 1/10 - pusty
+safe_landing.world - 1/10 - prawie puste
+uuv_bluerov2_heavy.world - pusty
+windy.world - pusty 
+empty.world - pusty 
+hitl_standard_vtol.world - jak windy - pusty
+sonoma_raceway.world - 4/10 - trasa wyścigowa
+uuv_hippocampus.world - pusty
+
+
+ksql_airport.world - 8/10 - całe miasto z budynkami (do powiększenia ich wysykości!)
+mcmillan_airfield.world - 8/10 - pusty świat ale z przewyższeniami
+yosemite.world - 6/10 - trzy góry i dolina w kształcie Y po środku
