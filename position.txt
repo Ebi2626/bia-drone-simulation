@@ -1,0 +1,13 @@
+Starting position for drone's on mcmillan airport:
+x: 2,662.302490
+y: -2,583.753174
+z: -54.242710
+
+roll: 0
+pitch: 0
+yaw: -2.335825
+
+Target:
+x: -2,622.284668
+y: 2,343.222168
+z: -43.132080
