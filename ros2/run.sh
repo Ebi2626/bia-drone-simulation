@@ -11,7 +11,7 @@ CONTAINER_NAME="ros2_px4_dev"
 echo "Uruchamianie kontenera $CONTAINER_NAME..."
 
 # Uruchomienie kontenera z odpowiednimi opcjami
-podman run -it --rm \
+podman run -it --rm --replace \
   --net=host \
   --ipc=host \
   --pid=host \
@@ -24,6 +24,7 @@ podman run -it --rm \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   -v ~/simulation/ros2/src:/home/ros2user/ros2_ws/src/my_swarm_planning:rw \
   --device=nvidia.com/gpu=all \
+  --workdir /home/ros2user/ros2_ws/src/my_swarm_planning \
   --name $CONTAINER_NAME \
   $IMAGE_NAME
 

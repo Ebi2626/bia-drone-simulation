@@ -2,6 +2,15 @@
 
 This repository contains an experiment on the efficiency of bio-inspired algorithms in path planning for drone swarms. The objective of this project is to compare the Osprey Optimization Algorithm, Multiple Swarm Fruit Fly Optimization Algorithm**,** and Sparrow Search Algorithm for path planning of drone swarms in a dynamic environment (with obstacles).
 
+## Prerequisties
+- OS: Fedora 43
+- Hardware: Nvidia GPU, 8GB RAM
+- Software: Podman, shell
+- Network access
+
+## Simulation
+To launch simulation we have to call `simulation.sh` inside the container.
+
 ## Usage
 Complete simulation will require few steps and few terminal window to work.
 1. Running `build.sh` will create docker image with ROS2, Gazebo and PX4-Autopilot

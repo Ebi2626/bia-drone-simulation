@@ -119,13 +119,10 @@ RUN if id -u 1000 > /dev/null 2>&1; then \
         echo "Created new user: $USERNAME"; \
     fi && \
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME && \
-    chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Symlinki
-RUN USERNAME=$(id -un 1000 2>/dev/null || echo "ubuntu") && \
-    su - $USERNAME -c "ln -s /opt/PX4-Autopilot ~/PX4-Autopilot" && \
-    su - $USERNAME -c "ln -s /opt/ros2_ws ~/ros2_ws" && \
-    su - $USERNAME -c "mkdir -p ~/scripts"
+    chmod 0440 /etc/sudoers.d/$USERNAME && \
+    chown -R 1000:1000 /opt/PX4-Autopilot && \
+    chown -R 1000:1000 /opt/ros2_ws && \
+    chown -R 1000:1000 /opt/Micro-XRCE-DDS-Agent
 
 # ============================================
 # SEKCJA 8: Konfiguracja środowiska (.bashrc) (ZMIANA)
@@ -156,16 +153,24 @@ RUN USERNAME=$(id -un 1000 2>/dev/null || echo "ubuntu") && \
 # ============================================
 # SEKCJA 9: Skrypty pomocnicze (ZMIANA)
 # ============================================
+# ============================================
+# SEKCJA 9: Skrypty pomocnicze (POPRAWIONA)
+# ============================================
 
 # Skrypt do budowania pojedynczego drona (Classic)
+# ZMIANA: Dodano jawne mkdir -p przed zapisem pliku
 RUN USERNAME=$(id -un 1000 2>/dev/null || echo "ubuntu") && \
+    mkdir -p /home/$USERNAME/scripts && \
     echo '#!/bin/bash' > /home/$USERNAME/scripts/build_px4.sh && \
     echo 'cd ~/PX4-Autopilot' >> /home/$USERNAME/scripts/build_px4.sh && \
     echo 'make px4_sitl gazebo-classic' >> /home/$USERNAME/scripts/build_px4.sh && \
-    chmod +x /home/$USERNAME/scripts/build_px4.sh
+    chmod +x /home/$USERNAME/scripts/build_px4.sh && \
+    chown -R $USERNAME:$USERNAME /home/$USERNAME/scripts
+
 
 # Skrypt do uruchamiania roju dronów (Dostosowany do Classic)
 RUN USERNAME=$(id -un 1000 2>/dev/null || echo "ubuntu") && \
+    mkdir -p /home/$USERNAME/scripts && \
     echo '#!/bin/bash' > /home/$USERNAME/scripts/start_swarm.sh && \
     echo '# Start multiple PX4 instances for swarm simulation in Gazebo Classic' >> /home/$USERNAME/scripts/start_swarm.sh && \
     echo 'NUM_DRONES=${1:-3}' >> /home/$USERNAME/scripts/start_swarm.sh && \
@@ -191,8 +196,9 @@ RUN USERNAME=$(id -un 1000 2>/dev/null || echo "ubuntu") && \
     echo 'done' >> /home/$USERNAME/scripts/start_swarm.sh && \
     echo '' >> /home/$USERNAME/scripts/start_swarm.sh && \
     echo 'echo "Swarm started. Launch Gazebo GUI manually if needed: gazebo --verbose"' >> /home/$USERNAME/scripts/start_swarm.sh && \
-    chmod +x /home/$USERNAME/scripts/start_swarm.sh
-
+    chmod +x /home/$USERNAME/scripts/start_swarm.sh && \
+    chown -R $USERNAME:$USERNAME /home/$USERNAME/scripts
+    
 USER $USERNAME
 WORKDIR /home/$USERNAME
 CMD ["/bin/bash"]
