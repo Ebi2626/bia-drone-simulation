@@ -15,12 +15,10 @@ To launch simulation we have to call `simulation.sh` inside the container.
 Complete simulation will require few steps and few terminal window to work.
 1. Running `build.sh` will create docker image with ROS2, Gazebo and PX4-Autopilot
 2. Running `run.sh` will launch docker container
-3. Inside the container (enter to the container with `podman exec -it ros2_px4_dev /bin/bash`) we need to build Gazebo with `cd /opt/PX4-Autopilot && make px4_sitl gz_x500` - this will launch window with simulation GUI on the host machine.
-4. In second terminal we need to run agent `MicroXRCEAgent udp4 -p 8888`
-5. In third terminal we need to launch simulation itself with few commands:
-    - `source /opt/ros/humble/setup.bash`
-    - `source /opt/ros2_ws/install/setup.bash`
-    - `python3 simulation_file_name.py` - launch simulation
+3. Inside container we have to launch 3 different terminals handling 3 separate processes:
+    - `ros2/src/simulation.sh complex` - will launch gazebo simulation with world 'complex' from /ros2/src/worlds/
+    - `MicroXRCEAgent udp4 -p 8888` - will launch DDS agent enabling communication between microcontrollers (like PX4 autopilot) and higher level systems like ROS2
+    - `test_offboard.py` - will launch drone controll script
 
 ## Map edition
 To edit map we have to launch container `run.sh` and launch choosen world in Gazebo eg: `gazebo --verbose ~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/worlds/yosemite.world`. List of default avilable worlds is located in `default-worlds.txt`
